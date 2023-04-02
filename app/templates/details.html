@@ -1,0 +1,61 @@
+ {% extends 'main.html'%}
+
+
+
+{% block content %}
+<div class="container">
+
+<h3 style="text-align: center;">{{log.title}}</h3>
+<p style="text-align: center;">{{log.date}}</p>
+{% if user.is_authenticated %}
+<div style="text-align: center;">
+    <a href="{% url 'delete' log.id%}">Delete</a>
+    <a href="{% url 'update' log.pk%}">Update</a>
+</div>
+{% endif %}
+
+<hr>
+{{log.text|safe}}
+</div>
+
+<div class="container">
+<h1 style="padding: 60px 0px 20px 0px">Add comment </h1>
+
+
+
+
+{% comment %} <a href="{% url 'add_comment' log.pk %}">Add comment</a> {% endcomment %}
+
+
+{% for logs in logs %}
+{% if log.title == logs.post.title %}
+{{logs.body}}
+{% endif %}
+{% endfor %}
+<br><br>
+
+<h3>Total comments: {{ total_comments }}</h3>
+
+<h3>Total views {{c}}</h3>
+
+
+<br><br><br>
+
+
+<form method="POST" action="" enctype="multipart/form-data">
+    {% csrf_token%}
+    {{form.as_p}}
+    <button type="submit">Submit</button>
+</form
+
+
+
+
+
+
+
+
+    
+
+
+{% endblock %}
